@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import { slugify } from "@/lib/slugify";
 
 const documentSchema = z.object({
   title: z.string().min(1),
@@ -55,10 +56,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const { title, content, isPublic, categoryId } = documentSchema.parse(body);
+    const slug = slugify(title);
 
     const document = await prisma.document.create({
       data: {
         title,
+        slug,
         content,
         isPublic,
         userId: session.user.id,

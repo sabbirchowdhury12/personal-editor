@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import { slugify } from "@/lib/slugify";
 
 const categorySchema = z.object({
   name: z.string().min(1),
@@ -31,11 +32,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const { name } = categorySchema.parse(body);
+    const slug = slugify(name);
 
     const category = await prisma.category.upsert({
       where: { name },
       update: {},
-      create: { name },
+      create: { name, slug },
     });
 
     return NextResponse.json(category);
