@@ -21,7 +21,7 @@ export default async function DashboardLayout({
   });
 
   const categories = await prisma.category.findMany({
-    orderBy: { name: "asc" },
+    orderBy: { order: "asc" },
   });
 
   return (

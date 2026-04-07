@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FileText, Plus, LogOut, Search, Home, Tag } from "lucide-react";
+import { FileText, Plus, LogOut, Search, Home, Tag, ArrowUpDown } from "lucide-react";
 
 interface SidebarProps {
   documents: { id: string; title: string }[];
@@ -73,9 +73,18 @@ export function Sidebar({ documents, categories }: SidebarProps) {
 
         {categories.length > 0 && (
           <div className="px-3 py-2">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[var(--muted)]">
-              <Tag className="w-4 h-4" />
-              Categories
+            <div className="flex items-center justify-between px-3 py-2 text-sm font-medium text-[var(--muted)]">
+              <div className="flex items-center gap-2">
+                <Tag className="w-4 h-4" />
+                Categories
+              </div>
+              <Link
+                href="/categories"
+                className="text-xs hover:text-[var(--foreground)]"
+                title="Manage categories"
+              >
+                Manage
+              </Link>
             </div>
             {categories.map((cat) => (
               <Link
@@ -107,6 +116,13 @@ export function Sidebar({ documents, categories }: SidebarProps) {
               {doc.title}
             </Link>
           ))}
+          <Link
+            href="/documents"
+            className={`flex items-center gap-2 px-3 py-2 pl-9 text-sm rounded-md hover:bg-[var(--border)] text-[var(--muted)]`}
+          >
+            <ArrowUpDown className="w-4 h-4" />
+            Reorder Documents
+          </Link>
         </div>
       </div>
 

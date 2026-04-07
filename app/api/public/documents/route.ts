@@ -21,7 +21,7 @@ export async function GET(request: Request) {
         select: { id: true, name: true, slug: true },
       },
     },
-    orderBy: { title: "asc" },
+    orderBy: { order: "asc" },
   });
 
   return NextResponse.json(documents);

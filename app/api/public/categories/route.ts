@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   const categories = await prisma.category.findMany({
-    orderBy: { name: "asc" },
+    orderBy: { order: "asc" },
     select: {
       id: true,
       slug: true,
@@ -11,6 +11,7 @@ export async function GET() {
       documents: {
         where: { isPublic: true },
         select: { id: true, slug: true, title: true },
+        orderBy: { order: "asc" },
       },
     },
   });

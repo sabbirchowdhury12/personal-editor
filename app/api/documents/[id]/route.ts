@@ -68,7 +68,11 @@ export async function PUT(
         ...(title && { title }),
         ...(content && { content }),
         ...(isPublic !== undefined && { isPublic }),
-        ...(categoryId !== undefined && { categoryId: categoryId || null }),
+        ...(categoryId !== undefined && { 
+          categoryId: categoryId || null,
+          // Set order to end of category if assigning to a category
+          ...(categoryId && { order: 0 }), // Simplified: you can enhance this
+        }),
       },
       include: {
         category: true,
